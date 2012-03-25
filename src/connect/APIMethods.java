@@ -1,31 +1,20 @@
 package connect;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIUtils;
 import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.jdom.JDOMException;
 
+import basicClasses.VKEvent;
 import basicClasses.VKUser;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 public class APIMethods {
@@ -54,48 +43,57 @@ public class APIMethods {
 		this.accessToken = accessToken;
 	}
 
-	public VKUser getUserInfo(String accessToken, String userId)
-			throws URISyntaxException, IOException, JDOMException {
-
+	@SuppressWarnings("unchecked")
+	public VKUser getUserInfo(String accessToken, String userId) throws URISyntaxException{
 		List<NameValuePair> qparams = new ArrayList<NameValuePair>();
 
 		qparams.add(new BasicNameValuePair("uids", userId));
 		qparams.add(new BasicNameValuePair("access_token", accessToken));
-		qparams.add(new BasicNameValuePair("fields", "uid, first_name, last_name, sex, bdate, photo_rec, contacts"));
-
-		/* for events:
-		qparams.add(new BasicNameValuePair("uid", userId));
-		qparams.add(new BasicNameValuePair("access_token", accessToken));
-		qparams.add(new BasicNameValuePair("extended", "1"));
-		qparams.add(new BasicNameValuePair("filter", "events"));*/
+		qparams.add(new BasicNameValuePair("fields", "uid, first_name, last_name, nickname, screen_name, sex, bdate, city, country, photo, photo_medium, photo_big, photo_rec, has_mobile, contacts, online"));
 
 		URI uri = URIUtils.createURI("https", "api.vk.com", -1,
 				"/method/users.get",
 				URLEncodedUtils.format(qparams, "UTF-8"), null);
 
-		HttpGet httpget = new HttpGet(uri);
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpResponse response = httpclient.execute(httpget);
-		HttpEntity entity = response.getEntity();
-		
-		if (entity != null) {
-			InputStream inputStream = entity.getContent();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					inputStream, "UTF-8"));
-	
-			Gson gson = new Gson();
-			Type type = new TypeToken<VKResponse<VKUser>>(){}.getType();
-			VKResponse<VKUser> vkres = gson.fromJson(reader, type);
-			VKUser user = vkres.getResponse().iterator().next();
-
-			System.err.println(user.getFirstName());
-			return user;
-		}
-		/*InputStream inputStream = entity.getContent();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				inputStream, "UTF-8"));
-		return reader.readLine();*/
-		return null;
+		Type type = new TypeToken<VKResponse<VKUser>>(){}.getType();
+		VKResponse<VKUser> vkres = (VKResponse<VKUser>) HTTPRequestJson.getJson(uri, type);
+		VKUser user = vkres.getResponse().iterator().next();
+		return user;
 	}
+	@SuppressWarnings("unchecked")
+	public Collection<VKUser> getFriends(String accessToken, String userId) throws URISyntaxException{
+		List<NameValuePair> qparams = new ArrayList<NameValuePair>();
 
+		qparams.add(new BasicNameValuePair("uid", userId));
+		qparams.add(new BasicNameValuePair("access_token", accessToken));
+		//qparams.add(new BasicNameValuePair("count", "50"));
+
+		URI uri = URIUtils.createURI("https", "api.vk.com", -1,
+				"/method/friends.get",
+				URLEncodedUtils.format(qparams, "UTF-8"), null);
+
+		Type type = new TypeToken<VKResponse<String>>(){}.getType();
+		VKResponse<String> vkres = (VKResponse<String>) HTTPRequestJson.getJson(uri, type);
+		Collection<VKUser> friends = new ArrayList<VKUser>();
+		for (String friend : vkres.getResponse()){
+			friends.add(getUserInfo(accessToken, friend));
+		}
+		return friends;
+	}
+	@SuppressWarnings("unchecked")
+	public Collection<VKEvent> getEvents(String accessToken, String userId) throws URISyntaxException{
+		List<NameValuePair> qparams = new ArrayList<NameValuePair>();
+		
+		qparams.add(new BasicNameValuePair("uid", userId));
+		qparams.add(new BasicNameValuePair("access_token", accessToken));
+		qparams.add(new BasicNameValuePair("extended", "1"));
+		qparams.add(new BasicNameValuePair("filter", "events"));
+		qparams.add(new BasicNameValuePair("fields", "start_date, end_date"));
+		
+		URI uri = URIUtils.createURI("https", "api.vk.com", -1,
+				"/method/getGroupsFull",
+				URLEncodedUtils.format(qparams, "UTF-8"), null);
+		Type type = new TypeToken<VKResponse<VKEvent>>(){}.getType();
+		return ((VKResponse<VKEvent>) HTTPRequestJson.getJson(uri, type)).getResponse();
+	}
 }

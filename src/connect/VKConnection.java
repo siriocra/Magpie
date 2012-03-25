@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = {"/login"})
+@WebServlet(urlPatterns = {"/logex"})
 public class VKConnection extends HttpServlet{
 	
 	@Override

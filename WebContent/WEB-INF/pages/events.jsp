@@ -10,18 +10,23 @@
 <title>All your events</title>
 </head>
 <body>
-	<b>Code: </b> ${code}
-	<br>
-	<b>Access token: </b> ${accessToken}
-	<br>
-	<b>Expires in: </b> ${expiresIn}
-	<br>
-	<b>User ID: </b> ${userId}
-	<br>
-	<p>
-		<c:forEach var="event" items="${events.events}">
-		${event.name } <br>
+	<table width="100%">
+		<c:forEach var="event" items="${events}">
+		<tr>
+		<td>
+		<img src="${event.photo }">
+		</td>
+		<td>
+		<a href="http://vk.com/${event.screen_name }">
+		${event.name }
+		</a>
+		</td>
+		<td>
+		Started: ${event.start_date }<br>
+		Ended: ${event.end_date }
+		</td>
+		</tr>
 		</c:forEach>
-	</p>
+	</table>
 </body>
 </html>

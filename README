@@ -1,2 +1,10 @@
 This is VK statistics program.
 Now it shows your VK user information.
+
+26.03.2012 Added 
+- viewing VK events with their date,
+- viewing all friends' contacts.
+Something seems stange and I think I have done something wrong, 
+but I don't understand what exactly.
+Online/offline function doesn't work - VK provides it only for friends.get.
+Requests about friends need to be combined in one request.
