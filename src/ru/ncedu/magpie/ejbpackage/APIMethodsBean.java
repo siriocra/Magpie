@@ -21,7 +21,7 @@ import ru.ncedu.magpie.connect.VKResponse;
 
 import com.google.gson.reflect.TypeToken;
 
-@Stateless
+@Stateless(name="APIMethodsBean", mappedName="APIMethodsBean") 
 public class APIMethodsBean implements APIMethodsRemote{
 	@SuppressWarnings("unchecked")
 	public VKUser getUserInfo(String accessToken, String userId) throws URISyntaxException{

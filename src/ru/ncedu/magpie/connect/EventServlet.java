@@ -6,9 +6,6 @@ import java.net.URISyntaxException;
 import java.util.Collection;
 
 import javax.ejb.EJB;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ru.ncedu.magpie.basicClasses.VKEvent;
-import ru.ncedu.magpie.ejbpackage.APIMethodsBean;
 import ru.ncedu.magpie.ejbpackage.APIMethodsRemote;
 
 
@@ -25,7 +21,7 @@ import ru.ncedu.magpie.ejbpackage.APIMethodsRemote;
 @WebServlet(urlPatterns = { "/events" })
 public class EventServlet extends HttpServlet implements javax.servlet.Servlet {
 	@EJB
-	private APIMethodsRemote apiMethods = new APIMethodsBean();
+	private APIMethodsRemote apiMethods;
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) 
@@ -33,7 +29,6 @@ public class EventServlet extends HttpServlet implements javax.servlet.Servlet {
 		String accessToken = request.getParameter("access_token");
 		String userId = request.getParameter("user_id"); 
 		try {
-			System.out.println(apiMethods.getEvents(accessToken, userId));
 			Collection<VKEvent> events = apiMethods.getEvents(accessToken, userId);
 			request.setAttribute("events", events);
 			
