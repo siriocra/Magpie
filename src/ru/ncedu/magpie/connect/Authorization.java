@@ -1,4 +1,4 @@
-package connect;
+package ru.ncedu.magpie.connect;
 
 import java.io.IOException;
 import java.io.PrintWriter;

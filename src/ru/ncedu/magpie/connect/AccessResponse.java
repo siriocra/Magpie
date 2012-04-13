@@ -1,4 +1,4 @@
-package connect;
+package ru.ncedu.magpie.connect;
 
 import com.google.gson.annotations.SerializedName;
 

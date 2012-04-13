@@ -1,4 +1,4 @@
-package basicClasses;
+package ru.ncedu.magpie.basicClasses;
 
 import com.google.gson.annotations.SerializedName;
 

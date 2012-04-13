@@ -1,4 +1,4 @@
-package connect;
+package ru.ncedu.magpie.ejbpackage;
 
 import java.lang.reflect.Type;
 import java.net.URI;
@@ -7,42 +7,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.ejb.Stateless;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIUtils;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 
-import basicClasses.VKEvent;
-import basicClasses.VKUser;
+import ru.ncedu.magpie.basicClasses.VKEvent;
+import ru.ncedu.magpie.basicClasses.VKUser;
+import ru.ncedu.magpie.connect.HTTPRequestJson;
+import ru.ncedu.magpie.connect.VKResponse;
 
 import com.google.gson.reflect.TypeToken;
 
-public class APIMethods {
-
-	private String userId;
-	private String accessToken;
-
-	public APIMethods(String userId, String accessToken) {
-		this.setUserId(userId);
-		this.setAccessToken(accessToken);
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getAccessToken() {
-		return accessToken;
-	}
-
-	public void setAccessToken(String accessToken) {
-		this.accessToken = accessToken;
-	}
-
+@Stateless
+public class APIMethodsBean implements APIMethodsRemote{
 	@SuppressWarnings("unchecked")
 	public VKUser getUserInfo(String accessToken, String userId) throws URISyntaxException{
 		List<NameValuePair> qparams = new ArrayList<NameValuePair>();

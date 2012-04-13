@@ -1,4 +1,4 @@
-package basicClasses;
+package ru.ncedu.magpie.basicClasses;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package basicClasses;
+package ru.ncedu.magpie.basicClasses;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
