@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ru.ncedu.magpie.basicClasses.VKUser;
 import ru.ncedu.magpie.ejbpackage.APIMethodsBean;
 import ru.ncedu.magpie.ejbpackage.APIMethodsRemote;
@@ -21,6 +24,8 @@ import ru.ncedu.magpie.ejbpackage.APIMethodsRemote;
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = { "/friends" })
 public class FriendsServlet extends HttpServlet {
+
+    private static final Logger logger = LoggerFactory.getLogger(FriendsServlet.class);
 	
 	@EJB
 	private APIMethodsRemote apiMethods  = new APIMethodsBean();
@@ -34,7 +39,12 @@ public class FriendsServlet extends HttpServlet {
 			VKUser user = apiMethods.getUserInfo(accessToken, userId);
 			request.setAttribute("userInfo", user);
 		
+            logger.trace("start getting friends' contacts");
+            
 			Collection<VKUser> friends = apiMethods.getFriends(accessToken, userId);
+
+            logger.trace("Finished collecting contacts from {} friends", friends.size());
+            
 			request.setAttribute("friends", friends);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/user.jsp");
@@ -50,8 +60,7 @@ public class FriendsServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		} catch (URISyntaxException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+            logger.error("Exception occurred while getting friends' contacts", e1);
 		}
 	}
 }
