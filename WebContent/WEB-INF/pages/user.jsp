@@ -19,12 +19,16 @@
 	<br>
 	<b>User ID: </b> ${userId}
 	<br>--%>
-	<table width="100%">
+	<center>
+	<table width="90%" align="center">
 	<tr>
 		<td valign="top">
-			<img src=${userInfo.photo100URL }>
+			<img src=${userInfo.photo200URL }>
 			<br>
-			<i><c:out value="${userInfo.online}">No info</c:out></i>
+			<i>
+			<%-- c:out value="${userInfo.online}">No info</c:out--%>
+				<c:if test = "${userInfo.online eq 'online'}"> online </c:if>
+			</i>
 			<br>
 			<a href="http://vk.com/${userInfo.screenName}">
 			<c:out value="${userInfo.firstName}">No name</c:out>
@@ -47,11 +51,20 @@
 		<td>
 			<table border=1 align="center" width="70%">
 				<caption><b>Friends</b></caption>
+				<tr>
+    				<th>Photo</th>
+    				<th>Name</th>
+    				<th>Contacts</th>
+  				</tr>
 				<c:forEach var="friend" items="${friends}">
 				<tr>
 					<td>
 					<img src=${friend.photo50URL }>
-					<i><c:out value="${friend.online}">No info</c:out></i>
+					<br>
+					<i>
+						<c:if test = "${friend.online eq 'online'}"> online </c:if>
+					<%--c:out value="${friend.online}">No info</c:out--%>
+					</i>
 					</td>
 					<td>
 					<a href="http://vk.com/${friend.screenName}">
@@ -70,5 +83,6 @@
 		</td>
 	</tr>
 	</table>
+	</center>
 </body>
 </html>

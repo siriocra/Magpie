@@ -10,23 +10,29 @@
 <title>All your events</title>
 </head>
 <body>
-	<table width="100%">
+	<center>
+	<table border="2" width="80%" cellpadding="20">
+		<tr>
+    		<th>Photo</th>
+    		<th>Name</th>
+    		<th>Time</th>
+  		</tr>
 		<c:forEach var="event" items="${events}">
 		<tr>
-		<td>
-		<img src="${event.photo }">
-		</td>
-		<td>
-		<a href="http://vk.com/${event.screen_name }">
-		${event.name }
-		</a>
-		</td>
-		<td>
-		Started: ${event.start_date }<br>
-		Ended: ${event.end_date }
-		</td>
+			<td>
+				<img src="${event.photo }">
+			</td>
+			<td>
+				<a href="http://vk.com/${event.screen_name }">
+					${event.name }
+				</a>
+			</td>
+			<td>
+				${event.start_date }
+			</td>
 		</tr>
 		</c:forEach>
 	</table>
+	</center>
 </body>
 </html>
