@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ru.ncedu.magpie.basicClasses.VKUser;
-import ru.ncedu.magpie.ejbpackage.APIMethodsRemote;
+import ru.ncedu.magpie.ejbpackage.APIMethods;
 
 
 @SuppressWarnings("serial")
@@ -22,7 +22,7 @@ import ru.ncedu.magpie.ejbpackage.APIMethodsRemote;
 public class FriendsServlet extends HttpServlet {
 	
 	@EJB
-	private APIMethodsRemote apiMethods;
+	private APIMethods apiMethods;
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
