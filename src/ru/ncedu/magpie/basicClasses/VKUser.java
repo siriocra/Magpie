@@ -180,7 +180,7 @@ public class VKUser {
 	}
 
 	public String getOnline() {
-		if (online == "1") 
+		if (online.equals("1")) 
 			return "online";
 		else
 			return "offline";

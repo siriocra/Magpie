@@ -14,14 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ru.ncedu.magpie.basicClasses.VKEvent;
-import ru.ncedu.magpie.ejbpackage.APIMethodsRemote;
+import ru.ncedu.magpie.ejbpackage.APIMethods;
 
 
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = { "/events" })
 public class EventServlet extends HttpServlet implements javax.servlet.Servlet {
 	@EJB
-	private APIMethodsRemote apiMethods;
+	private APIMethods apiMethods;
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) 

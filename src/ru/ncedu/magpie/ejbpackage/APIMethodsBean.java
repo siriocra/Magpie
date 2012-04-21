@@ -22,7 +22,7 @@ import ru.ncedu.magpie.connect.VKResponse;
 import com.google.gson.reflect.TypeToken;
 
 @Stateless(name="APIMethodsBean", mappedName="APIMethodsBean") 
-public class APIMethodsBean implements APIMethodsRemote{
+public class APIMethodsBean implements APIMethods{
 	@SuppressWarnings("unchecked")
 	public VKUser getUserInfo(String accessToken, String userId) throws URISyntaxException{
 		List<NameValuePair> qparams = new ArrayList<NameValuePair>();
@@ -47,18 +47,21 @@ public class APIMethodsBean implements APIMethodsRemote{
 		qparams.add(new BasicNameValuePair("uid", userId));
 		qparams.add(new BasicNameValuePair("access_token", accessToken));
 		//qparams.add(new BasicNameValuePair("count", "50"));
-
+		qparams.add(new BasicNameValuePair("fields", "uid, first_name, last_name, nickname, screen_name, sex, bdate, city, country, photo, photo_medium, photo_big, photo_rec, has_mobile, contacts, online"));
+		
 		URI uri = URIUtils.createURI("https", "api.vk.com", -1,
 				"/method/friends.get",
 				URLEncodedUtils.format(qparams, "UTF-8"), null);
 
-		Type type = new TypeToken<VKResponse<String>>(){}.getType();
-		VKResponse<String> vkres = (VKResponse<String>) HTTPRequestJson.getJson(uri, type);
-		Collection<VKUser> friends = new ArrayList<VKUser>();
+		Type type = new TypeToken<VKResponse<VKUser>>(){}.getType();
+		VKResponse<VKUser> vkres = (VKResponse<VKUser>) HTTPRequestJson.getJson(uri, type);
+		//VKResponse<String>
+		/*Collection<VKUser> friends = new ArrayList<VKUser>();
 		for (String friend : vkres.getResponse()){
 			friends.add(getUserInfo(accessToken, friend));
 		}
-		return friends;
+		return friends;*/
+		return vkres.getResponse();
 	}
 	@SuppressWarnings("unchecked")
 	public Collection<VKEvent> getEvents(String accessToken, String userId) throws URISyntaxException{
