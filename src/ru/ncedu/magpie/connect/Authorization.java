@@ -1,7 +1,6 @@
 package ru.ncedu.magpie.connect;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.utils.URIUtils;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -76,26 +74,12 @@ public class Authorization extends HttpServlet{
 			try {
 				rd.forward(request, response);
 			} catch (ServletException e) {
-				PrintWriter out = response.getWriter();
-				out.print("ServletException");
-				logger.error("ServletException", e);
+				logger.error("Error while loading welcome page. ServletException", e);
 			} catch (IOException e) {
-				PrintWriter out = response.getWriter();
-				out.print("IOException");
-				logger.error("IOException", e);
+				logger.error("Error while loading welcome page. IOException", e);
 			}
-		} catch (URISyntaxException e) {
-			PrintWriter out = response.getWriter();
-			out.print("URISyntaxException");
-			logger.error("URISyntaxException", e);
-		} catch (ClientProtocolException e) {
-			PrintWriter out = response.getWriter();
-			out.print("ClientProtocolException");
-			logger.error("ClientProtocolException", e);
-		} catch (IOException e) {
-			PrintWriter out = response.getWriter();
-			out.print("IOException");
-			logger.error("IOException", e);
+		} catch (URISyntaxException e1) {
+			logger.error("Authorization failed. URISyntaxException", e1);
 		}
 	}
 }

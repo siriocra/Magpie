@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DBInterface {
 	private static DBInterface instance;
 	
@@ -19,6 +22,8 @@ public class DBInterface {
 	private Statement stat;
 	private PreparedStatement prep;
 	private ResultSet rs;
+	
+	private static final Logger logger = LoggerFactory.getLogger(DBInterface.class);
 	
 	public static synchronized DBInterface getInstance(){
 		if (instance == null) {
@@ -32,7 +37,7 @@ public class DBInterface {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.error("ClassNotFoundException", e);
 		}
 		
 		try {
@@ -69,7 +74,7 @@ public class DBInterface {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Error occured");
+			logger.error("SQLException", e);
 		} finally {
 //			rs.close();
 //			prep.close();
@@ -82,7 +87,7 @@ public class DBInterface {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.error("ClassNotFoundException", e);
 		}
 		
 		try {
@@ -115,8 +120,7 @@ public class DBInterface {
 			}
 			ps.executeUpdate();
 		}catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Error occured");
+			logger.error("SQLException", e);
 		} finally {
 			conn.close();
 		}
@@ -127,7 +131,7 @@ public class DBInterface {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.error("ClassNotFoundException", e);
 		}
 		
 		List<String> friendsIds = new ArrayList<String>();
@@ -177,8 +181,7 @@ public class DBInterface {
 			
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
-			
+			logger.error("SQLException", e);
 		}
 		finally {
 			conn.close();
@@ -190,7 +193,7 @@ public class DBInterface {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.error("ClassNotFoundException", e);
 		}
 		
 		try {
@@ -208,7 +211,7 @@ public class DBInterface {
 				ps.executeUpdate();
 			}
 		} catch (SQLException ex) {
-			ex.printStackTrace();
+			logger.error("SQLException", ex);
 		} finally {
 			conn.close();
 		}

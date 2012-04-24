@@ -1,7 +1,6 @@
 package ru.ncedu.magpie.connect;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.annotation.Resource;
 import javax.jms.Connection;
@@ -38,7 +37,8 @@ public class RefreshFriendsServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		String accessToken = request.getParameter("access_token");
-		String userId = request.getParameter("user_id"); 
+		String userId = request.getParameter("user_id");
+		logger.trace("Sending message getFriends to MDB");
 		try {
 			Connection connection = connectionFactory.createConnection();
 			Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -53,22 +53,16 @@ public class RefreshFriendsServlet extends HttpServlet {
 			session.close();
 			connection.close();
 		} catch (JMSException e) {
-			logger.error("Error occured while sending message getFriends. JMSException", e);
+			logger.error("Error while sending message getFriends. JMSException", e);
 		}
-        
-        logger.trace("JMS getFriends sent");
                     
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/ready.jsp");
 		try {
 			rd.forward(request, response);
 		} catch (ServletException e) {
-			PrintWriter out = response.getWriter();
-			out.print("ServletException");
-			logger.error("Exception occurred while refreshing friends' contacts. ServletException", e);
+			logger.error("Error while refreshing friends' contacts. ServletException", e);
 		} catch (IOException e) {
-			PrintWriter out = response.getWriter();
-			out.print("IOException");
-			logger.error("Exception occurred while refreshing friends' contacts. IOException", e);
+			logger.error("Error while refreshing friends' contacts. IOException", e);
 		}
 	}
 }

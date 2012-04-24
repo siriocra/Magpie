@@ -41,11 +41,11 @@ public class FriendsMDB implements MessageListener{
 			DBInterface.getInstance().saveFriends(userId + ".db", userId, friends);
 			logger.trace("End of message processing");
 		} catch (JMSException e) {
-			logger.error("JMSException", e);
+			logger.error("Error while processing message. JMSException", e);
 		} catch (URISyntaxException e) {
-			logger.error("URISyntaxException", e);
+			logger.error("Error while processing message. URISyntaxException", e);
 		} catch (SQLException e) {
-			logger.error("SQLException", e);
+			logger.error("Error while processing message. SQLException", e);
 		}
 	}
 	

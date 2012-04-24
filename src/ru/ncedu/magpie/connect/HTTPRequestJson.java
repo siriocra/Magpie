@@ -14,12 +14,17 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 public class HTTPRequestJson {
+	
+	private static final Logger logger = LoggerFactory.getLogger(HTTPRequestJson.class);
+	
 	public static Object getJson(URI uri, Type type){
 		try {
 			HttpGet httpget = new HttpGet(uri);
@@ -35,23 +40,17 @@ public class HTTPRequestJson {
 				return gson.fromJson(reader, type);
 			}
 		} catch (JsonIOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while parsing json. JsonIOException", e, uri);
 		} catch (JsonSyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while parsing json. JsonSyntaxException", e, uri);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while parsing json. ClientProtocolException", e, uri);
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while parsing json. IllegalStateException", e, uri);
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while parsing json. UnsupportedEncodingException", e, uri);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while parsing json. IOException", e, uri);
 		}
 		return null;
 	}

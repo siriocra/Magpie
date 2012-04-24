@@ -1,7 +1,6 @@
 package ru.ncedu.magpie.connect;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Collection;
 
@@ -38,16 +37,12 @@ public class ShowFriendsServlet extends HttpServlet {
 			try {
 				rd.forward(request, response);
 			} catch (ServletException e) {
-				PrintWriter out = response.getWriter();
-				out.print("ServletException");
-				logger.error("Error while loading page. ServletException", e);
+				logger.error("Error while loading friends page. ServletException", e);
 			} catch (IOException e) {
-				PrintWriter out = response.getWriter();
-				out.print("IOException");
-				logger.error("Error while loading page. IOException", e);
+				logger.error("Error while loading friends page. IOException", e);
 			}
 		} catch (SQLException e) {
-			logger.error("Exception occured while loading friends from database. SQLException", e);
+			logger.error("Error while loading friends from database. SQLException", e);
 		}
 	}
 }
