@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,11 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.utils.URIUtils;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ru.ncedu.magpie.basicClasses.VKUser;
+import ru.ncedu.magpie.ejbpackage.APIMethods;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -31,6 +37,11 @@ public class Authorization extends HttpServlet{
 	// TODO: CLIENT_SECRET must not be in code!
 	private static final String CLIENT_SECRET = "no6gpjnzk85e9FEV2RbP";
 
+	@EJB
+	private APIMethods apiMethods;
+	
+	private static final Logger logger = LoggerFactory.getLogger(Authorization.class);
+    
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws IOException
 	{
@@ -56,31 +67,35 @@ public class Authorization extends HttpServlet{
 			request.setAttribute("expiresIn", accessResponse.getExpires_in());
 			request.setAttribute("accessToken", accessToken);
 			request.setAttribute("userId", userId);
-			
+		
+			logger.trace("Getting user info " + userId);
+			VKUser user = apiMethods.getUserInfo(accessToken, userId);
+			request.setAttribute("userInfo", user);
+		
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/welcome.jsp");
 			try {
 				rd.forward(request, response);
 			} catch (ServletException e) {
 				PrintWriter out = response.getWriter();
 				out.print("ServletException");
-				e.printStackTrace();
+				logger.error("ServletException", e);
 			} catch (IOException e) {
 				PrintWriter out = response.getWriter();
 				out.print("IOException");
-				e.printStackTrace();
+				logger.error("IOException", e);
 			}
 		} catch (URISyntaxException e) {
 			PrintWriter out = response.getWriter();
 			out.print("URISyntaxException");
-			e.printStackTrace();
+			logger.error("URISyntaxException", e);
 		} catch (ClientProtocolException e) {
 			PrintWriter out = response.getWriter();
 			out.print("ClientProtocolException");
-			e.printStackTrace();
+			logger.error("ClientProtocolException", e);
 		} catch (IOException e) {
 			PrintWriter out = response.getWriter();
 			out.print("IOException");
-			e.printStackTrace();
+			logger.error("IOException", e);
 		}
 	}
 }

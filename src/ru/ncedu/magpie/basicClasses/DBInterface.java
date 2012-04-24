@@ -1,6 +1,5 @@
 package ru.ncedu.magpie.basicClasses;
 
-import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,11 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-
-import ru.ncedu.magpie.basicClasses.VKUser;
 
 public class DBInterface {
 	private static DBInterface instance;
@@ -25,7 +20,7 @@ public class DBInterface {
 	private PreparedStatement prep;
 	private ResultSet rs;
 	
-	public static synchronized DBInterface getInstance() throws Exception {
+	public static synchronized DBInterface getInstance(){
 		if (instance == null) {
 			instance = new DBInterface();
 		}
@@ -191,7 +186,7 @@ public class DBInterface {
 		return friends;
 	}
 	
-	public void saveFriends(String filename, String userID, List<VKUser> friends) throws SQLException {
+	public void saveFriends(String filename, String userID, Collection<VKUser> friends) throws SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {

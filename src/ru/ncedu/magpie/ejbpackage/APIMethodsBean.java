@@ -55,12 +55,6 @@ public class APIMethodsBean implements APIMethods{
 
 		Type type = new TypeToken<VKResponse<VKUser>>(){}.getType();
 		VKResponse<VKUser> vkres = (VKResponse<VKUser>) HTTPRequestJson.getJson(uri, type);
-		//VKResponse<String>
-		/*Collection<VKUser> friends = new ArrayList<VKUser>();
-		for (String friend : vkres.getResponse()){
-			friends.add(getUserInfo(accessToken, friend));
-		}
-		return friends;*/
 		return vkres.getResponse();
 	}
 	@SuppressWarnings("unchecked")
