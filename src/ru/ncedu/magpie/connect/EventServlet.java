@@ -21,7 +21,7 @@ import ru.ncedu.magpie.ejbpackage.APIMethods;
 
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = { "/events" })
-public class EventServlet extends HttpServlet implements javax.servlet.Servlet {
+public class EventServlet extends HttpServlet {
 	@EJB
 	private APIMethods apiMethods;
 	
