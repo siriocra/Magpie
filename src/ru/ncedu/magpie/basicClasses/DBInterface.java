@@ -16,8 +16,6 @@ import org.slf4j.LoggerFactory;
 public class DBInterface {
 	private static DBInterface instance;
 	
-	private List<VKUser> users;
-	
 	private Connection conn;
 	private Statement stat;
 	private PreparedStatement prep;
@@ -33,15 +31,16 @@ public class DBInterface {
 	}
 	
 	// load users from file
-	public void loadDB (String filename) throws SQLException {
+	public Collection<VKUser> loadDB () throws SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
 			logger.error("ClassNotFoundException", e);
 		}
 		
+		Collection<VKUser> users = new ArrayList<VKUser>();
 		try {
-			conn = DriverManager.getConnection("jdbc:sqlite:" + filename);
+			conn = DriverManager.getConnection("jdbc:sqlite:" + "magpieDB.sqlite");
 			stat = conn.createStatement();
 
 			rs = stat.executeQuery("SELECT COUNT(*) AS COUNT FROM Users");
@@ -81,9 +80,10 @@ public class DBInterface {
 //			stat.close();
 			conn.close();
 		}
+		return users;
 	}
 	
-	public void saveDB(String filename) throws SQLException {
+	public void saveDB(Collection<VKUser> users) throws SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
@@ -91,7 +91,7 @@ public class DBInterface {
 		}
 		
 		try {
-			conn = DriverManager.getConnection("jdbc:sqlite:" + filename);
+			conn = DriverManager.getConnection("jdbc:sqlite:" + "magpieDB.sqlite");
 			stat = conn.createStatement();
 			
 			PreparedStatement ps= conn.prepareStatement
@@ -126,19 +126,18 @@ public class DBInterface {
 		}
 	}
 	
-	//where to use it?
-	public List<VKUser> loadFriends(String filename, String userID) throws SQLException {
+	public List<VKUser> loadFriends(String userID) throws SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
 			logger.error("ClassNotFoundException", e);
 		}
 		
-		List<String> friendsIds = new ArrayList<String>();
-		List<VKUser> friends = new ArrayList<VKUser>();
+		Collection<String> friendsIds = new ArrayList<String>();
+		Collection<VKUser> friends = new ArrayList<VKUser>();
 		
 		try {
-			conn = DriverManager.getConnection("jdbc:sqlite:" + filename);
+			conn = DriverManager.getConnection("jdbc:sqlite:" + "magpieDB.sqlite");
 			stat = conn.createStatement();
 
 			PreparedStatement ps = conn.prepareStatement("SELECT FriendId FROM Friends WHERE UserId = ? AND rowid = ?");
@@ -189,7 +188,7 @@ public class DBInterface {
 		return friends;
 	}
 	
-	public void saveFriends(String filename, String userID, Collection<VKUser> friends) throws SQLException {
+	public void saveFriends(String userID, Collection<VKUser> friends) throws SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {
@@ -197,7 +196,7 @@ public class DBInterface {
 		}
 		
 		try {
-			conn = DriverManager.getConnection("jdbc:sqlite:" + filename);
+			conn = DriverManager.getConnection("jdbc:sqlite:" + "magpieDB.sqlite");
 			stat = conn.createStatement();
 			
 			PreparedStatement ps = conn.prepareStatement("DELETE FROM Friends WHERE UserId = ?");

@@ -38,7 +38,7 @@ public class FriendsMDB implements MessageListener{
 			logger.trace("Getting friends by " + userId);
 			Collection<VKUser> friends = apiMethods.getFriends(accessToken, userId);
 			logger.trace("Saving to database");
-			DBInterface.getInstance().saveFriends(userId + ".db", userId, friends);
+			DBInterface.getInstance().saveFriends(userId, friends);
 			logger.trace("End of message processing");
 		} catch (JMSException e) {
 			logger.error("Error while processing message. JMSException", e);
