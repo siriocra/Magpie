@@ -11,7 +11,7 @@
 <title>Welcome!</title>
 </head>
 <body>
-	System information<br>
+	<%-- System information<br>
 	<b>Code: </b> ${code}
 	<br>
 	<b>Access token: </b> ${accessToken}
@@ -19,7 +19,9 @@
 	<b>Expires in: </b> ${expiresIn}
 	<br>
 	<b>User ID: </b> ${userId}
-	<br>
+	<br>--%>
+<a href="/Magpie/about">About this application</a>
+<br>
 <table width="90%" align="center">
 	<tr>
 		<td valign="top">

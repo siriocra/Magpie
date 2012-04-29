@@ -1,0 +1,55 @@
+Для использования локально: 
+   Linux: /etc/hosts
+   Windows NT, 2000, XP, 2003, Vista, 7: %SystemRoot%\system32\drivers\etc\hosts
+   В /etc/hosts прописать 
+       127.0.0.1	keers.jelastic.servint.net
+
+Логи лежат в glassfish3/glassfish/domains/domain1/logs/magpie.log
+
+Инструкция по настройке сервера:
+1. Копируем resources/sqlite-jdbc-3.7.2.jar в glassfish3/glassfish/domains/domain1/lib/ext
+2. Стартуем сервер
+3. Заходим в административную консоль (127.0.0.1:4848)
+
+Настройка ресурса JDBC:
+4. Resources -> JDBC -> JDBC Connection Pools -> new
+       Pool Name: magpieDBpool
+       Resource Type: javax.sql.DataSource
+       Ping: enabled
+     Next
+       Datasource Classname: org.sqlite.SQLiteDataSource     
+       Select All
+       Delete Properties
+       Add Property
+         Name: URL
+         Value: <путь до файла с базой>, например jdbc:sqlite:/Documents/projects/magpie/magpieDB.sqlite
+	      (база может и не существовать, по идее файл сам может создаться, если его нет)
+5. Resources -> JDBC -> JDBC Resources -> new
+       JNDI Name: jdbc/magpieDB
+       Pool Name: magpieDBpool
+
+Настройка JMS:
+6. Resources -> JMS Resources -> Connection Factories -> new
+     Pool Name: jms/QueueConnectionFactory
+     JNDI Name: jms/QueueConnectionFactory
+     Resource Type: javax.jms.ConnectionFactory
+
+7. Resources -> JMS Resources -> Destination Resources -> new
+     JNDI Name: FriendsQueue
+     Physical Destination Name: friendsQueue
+     Resource Type: javax.jms.Queue
+     Status: Enabled 
+
+Настройка свойств приложения:
+8. Resources -> JNDI -> Custom Resources -> new
+     JNDI Name: AuthorizationProperties
+     Resource Type: java.util.Properties
+     Factory Class: org.glassfish.resources.custom.factory.PropertiesFactory
+     Add Property
+       Name: CLIENT_ID
+       Value: 2837023
+     Add Property
+       Name: CLIENT_SECRET
+       Value: no6gpjnzk85e9FEV2RbP
+
+

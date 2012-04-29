@@ -12,6 +12,10 @@ import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class for working with database
+ * @author IndisN
+ */
 public class DBInterface {
 	private static DBInterface instance;
 	
@@ -29,7 +33,11 @@ public class DBInterface {
 		return instance;
 	}
 	
-	// load users from file
+	/**
+	 * Loads users from file
+	 * @return Collection of users from database
+	 * @throws SQLException
+	 */
 	public Collection<VKUser> loadDB () throws SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -82,6 +90,11 @@ public class DBInterface {
 		return users;
 	}
 	
+	/**
+	 * Saves users to file
+	 * @param users
+	 * @throws SQLException
+	 */
 	public void saveDB(Collection<VKUser> users) throws SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -123,7 +136,12 @@ public class DBInterface {
 			conn.close();
 		}
 	}
-	
+	/**
+	 * Loads VK user's friends from database
+	 * @param userID
+	 * @return Collection of friends
+	 * @throws SQLException
+	 */
 	public Collection<VKUser> loadFriends(String userID) throws SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -186,6 +204,12 @@ public class DBInterface {
 		return friends;
 	}
 	
+	/**
+	 * Saves user's friends to database
+	 * @param userID
+	 * @param friends
+	 * @throws SQLException
+	 */
 	public void saveFriends(String userID, Collection<VKUser> friends) throws SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");

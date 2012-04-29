@@ -3,9 +3,8 @@ package ru.ncedu.magpie.connect;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * User: sergeikirsanov
- * Date: 3/5/12
- * Time: 10:04 PM
+ * Class for getting access token from VK API 
+ * @author keers
  */
 public class AccessResponse {
     @SerializedName("access_token")

@@ -21,6 +21,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
+/**
+ * Class for making a request to VK and parsing answers from json
+ * @author IrisM
+ *
+ */
 public class HTTPRequestJson {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HTTPRequestJson.class);

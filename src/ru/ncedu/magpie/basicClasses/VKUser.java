@@ -1,7 +1,10 @@
 package ru.ncedu.magpie.basicClasses;
 
 import com.google.gson.annotations.SerializedName;
-
+/**
+ * Class for storing users from VK
+ * @author IrisM
+ */
 public class VKUser {
 	
 	@SerializedName("uid")

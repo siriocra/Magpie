@@ -20,7 +20,12 @@ import ru.ncedu.magpie.connect.HTTPRequestJson;
 import ru.ncedu.magpie.connect.VKResponse;
 
 import com.google.gson.reflect.TypeToken;
-
+/**
+ * Stateless session bean, implementing {@link APIMethods} interface 
+ * @author IrisM
+ *
+ * @see APIMethods
+ */
 @Stateless(name="APIMethodsBean", mappedName="APIMethodsBean") 
 public class APIMethodsBean implements APIMethods{
 	@SuppressWarnings("unchecked")

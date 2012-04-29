@@ -18,15 +18,22 @@ import org.slf4j.LoggerFactory;
 import ru.ncedu.magpie.basicClasses.DBInterface;
 import ru.ncedu.magpie.basicClasses.VKUser;
 
+/**
+ * Message-Driven Bean for getting message to 
+ * call {@link APIMethods#getFriends(String, String)}
+ * @author IrisM
+ * 
+ * @see APIMethods
+ */
 @MessageDriven(activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationName", propertyValue = "FriendsQueue"),
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 }, mappedName = "FriendsQueue")
 public class FriendsMDB implements MessageListener{
-
-	private static final Logger logger = LoggerFactory.getLogger(FriendsMDB.class);
 	@EJB
 	private APIMethods apiMethods;
+
+	private static final Logger logger = LoggerFactory.getLogger(FriendsMDB.class);
 	
 	@Override
 	public void onMessage(Message message) {
@@ -35,7 +42,7 @@ public class FriendsMDB implements MessageListener{
 			logger.trace("New message received");
 			accessToken = ((MapMessage)message).getString("access_token");
 			userId = ((MapMessage)message).getString("user_id");
-			logger.trace("Getting friends by " + userId);
+			logger.trace("Getting friends by {}", userId);
 			Collection<VKUser> friends = apiMethods.getFriends(accessToken, userId);
 			logger.trace("Saving to database");
 			DBInterface.getInstance().saveFriends(userId, friends);
