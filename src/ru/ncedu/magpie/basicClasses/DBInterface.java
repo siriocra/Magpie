@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,7 @@ public class DBInterface {
 	
 	private Connection conn;
 	private Statement stat;
-	private PreparedStatement prep;
+	//private PreparedStatement prep;
 	private ResultSet rs;
 	
 	private static final Logger logger = LoggerFactory.getLogger(DBInterface.class);
@@ -98,25 +97,24 @@ public class DBInterface {
 					("insert into Users (Id, FirstName, LastName, Sex, BirthDate, " +
 							"Photo50URL, MobilePhone, HomePhone, Nickname, ScreenName, City, Country, PhotoURL, Photo100URL, Photo200URL, Online, HasMobile) " +
 							"values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-			
-			for (int i = 0; i < users.size(); i++) {
-				ps.setString(1, users.get(i).getUserId());
-				ps.setString(2, users.get(i).getFirstName());
-				ps.setString(3, users.get(i).getLastName());
-				ps.setString(4, users.get(i).getUserSex());
-				ps.setString(5, users.get(i).getBirthDate());
-				ps.setString(6, users.get(i).getPhoto50URL());
-				ps.setString(7, users.get(i).getMobilePhone());
-				ps.setString(8, users.get(i).getHomePhone());
-				ps.setString(9, users.get(i).getNickname());
-				ps.setString(10, users.get(i).getScreenName());
-				ps.setString(11, users.get(i).getCity());
-				ps.setString(12, users.get(i).getCountry());
-				ps.setString(13, users.get(i).getPhotoURL());
-				ps.setString(14, users.get(i).getPhoto100URL());
-				ps.setString(15, users.get(i).getPhoto200URL());
-				ps.setString(16, users.get(i).getOnline());
-				ps.setString(17, users.get(i).getHasMobile());
+			for (VKUser user : users){
+				ps.setString(1, user.getUserId());
+				ps.setString(2, user.getFirstName());
+				ps.setString(3, user.getLastName());
+				ps.setString(4, user.getUserSex());
+				ps.setString(5, user.getBirthDate());
+				ps.setString(6, user.getPhoto50URL());
+				ps.setString(7, user.getMobilePhone());
+				ps.setString(8, user.getHomePhone());
+				ps.setString(9, user.getNickname());
+				ps.setString(10, user.getScreenName());
+				ps.setString(11, user.getCity());
+				ps.setString(12, user.getCountry());
+				ps.setString(13, user.getPhotoURL());
+				ps.setString(14, user.getPhoto100URL());
+				ps.setString(15, user.getPhoto200URL());
+				ps.setString(16, user.getOnline());
+				ps.setString(17, user.getHasMobile());
 			}
 			ps.executeUpdate();
 		}catch (SQLException e) {
@@ -126,7 +124,7 @@ public class DBInterface {
 		}
 	}
 	
-	public List<VKUser> loadFriends(String userID) throws SQLException {
+	public Collection<VKUser> loadFriends(String userID) throws SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException e) {

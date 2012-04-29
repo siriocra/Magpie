@@ -29,7 +29,7 @@ public class ShowFriendsServlet extends HttpServlet {
 			throws IOException {
 		String userId = request.getParameter("user_id"); 
 		try {
-			Collection<VKUser> friends = DBInterface.getInstance().loadFriends(userId + ".db", userId);
+			Collection<VKUser> friends = DBInterface.getInstance().loadFriends(userId);
 			
 			request.setAttribute("friends", friends);
 			

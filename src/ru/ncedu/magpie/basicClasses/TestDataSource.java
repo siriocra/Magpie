@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
+@SuppressWarnings("serial")
 @WebServlet(urlPatterns = {"/db"})
 public class TestDataSource extends HttpServlet {
 
