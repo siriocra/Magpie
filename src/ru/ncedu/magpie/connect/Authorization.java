@@ -66,7 +66,7 @@ public class Authorization extends HttpServlet{
 			request.setAttribute("accessToken", accessToken);
 			request.setAttribute("userId", userId);
 		
-			logger.trace("Getting user info " + userId);
+			logger.trace("Getting user info {}", userId);
 			VKUser user = apiMethods.getUserInfo(accessToken, userId);
 			request.setAttribute("userInfo", user);
 		

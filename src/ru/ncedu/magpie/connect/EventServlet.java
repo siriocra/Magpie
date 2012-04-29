@@ -33,7 +33,7 @@ public class EventServlet extends HttpServlet {
 		String accessToken = request.getParameter("access_token");
 		String userId = request.getParameter("user_id"); 
 		try {
-			logger.trace("Getting user events " + userId);
+			logger.trace("Getting user events {}", userId);
 			Collection<VKEvent> events = apiMethods.getEvents(accessToken, userId);
 			request.setAttribute("events", events);
 			

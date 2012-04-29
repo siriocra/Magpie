@@ -35,7 +35,7 @@ public class FriendsMDB implements MessageListener{
 			logger.trace("New message received");
 			accessToken = ((MapMessage)message).getString("access_token");
 			userId = ((MapMessage)message).getString("user_id");
-			logger.trace("Getting friends by " + userId);
+			logger.trace("Getting friends by {}", userId);
 			Collection<VKUser> friends = apiMethods.getFriends(accessToken, userId);
 			logger.trace("Saving to database");
 			DBInterface.getInstance().saveFriends(userId, friends);
