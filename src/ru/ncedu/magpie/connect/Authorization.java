@@ -6,7 +6,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,11 +37,12 @@ import com.google.gson.reflect.TypeToken;
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = {"/auth"})
 public class Authorization extends HttpServlet{
-	private static final String CLIENT_ID = "2837023";
-
-	// TODO: CLIENT_SECRET must not be in code!
-	private static final String CLIENT_SECRET = "no6gpjnzk85e9FEV2RbP";
-
+	@Resource(name = "AuthorizationProperties", mappedName = "AuthorizationProperties")
+	private Properties properties;
+	
+	private String CLIENT_ID;
+	private String CLIENT_SECRET;
+	
 	@EJB
 	private APIMethods apiMethods;
 	
@@ -52,6 +55,8 @@ public class Authorization extends HttpServlet{
 		if (code != null) {
 			request.setAttribute("code", code);
 		}
+		CLIENT_ID = properties.getProperty("CLIENT_ID");
+		CLIENT_SECRET = properties.getProperty("CLIENT_SECRET");
 		try {
 			List<NameValuePair> qparams = new ArrayList<NameValuePair>();
 			qparams.add(new BasicNameValuePair("client_id", CLIENT_ID));

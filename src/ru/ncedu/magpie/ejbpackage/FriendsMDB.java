@@ -30,10 +30,10 @@ import ru.ncedu.magpie.basicClasses.VKUser;
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 }, mappedName = "FriendsQueue")
 public class FriendsMDB implements MessageListener{
-
-	private static final Logger logger = LoggerFactory.getLogger(FriendsMDB.class);
 	@EJB
 	private APIMethods apiMethods;
+
+	private static final Logger logger = LoggerFactory.getLogger(FriendsMDB.class);
 	
 	@Override
 	public void onMessage(Message message) {

@@ -16,15 +16,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
+/**
+ * Not for usage. Just an example of using JDBC
+ * @author keers
+ *
+ */
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = {"/db"})
 public class TestDataSource extends HttpServlet {
+    @Resource(name = "jdbc/magpieDB", mappedName = "jdbc/magpieDB")
+    private DataSource dataSource;
 
     private static final Logger logger = LoggerFactory.getLogger(TestDataSource.class);
-
-    @Resource(name = "jdbc/magpieDB")
-    private DataSource dataSource;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
