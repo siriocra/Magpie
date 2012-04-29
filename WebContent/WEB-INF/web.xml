@@ -12,4 +12,14 @@
         <welcome-file>/WEB-INF/pages/index.jsp</welcome-file>
     </welcome-file-list>
 
+	<servlet>
+		<servlet-name>about</servlet-name>
+		<jsp-file>/WEB-INF/pages/about.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>about</servlet-name>
+		<url-pattern>/about</url-pattern>
+	</servlet-mapping>
+
 </web-app>
