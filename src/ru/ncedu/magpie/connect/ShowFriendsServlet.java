@@ -17,7 +17,11 @@ import org.slf4j.LoggerFactory;
 import ru.ncedu.magpie.basicClasses.DBInterface;
 import ru.ncedu.magpie.basicClasses.VKUser;
 
-
+/**
+ * Servlet, showing current user's friends' contacts from database
+ * @author IrisM
+ *
+ */
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = { "/showfriends" })
 public class ShowFriendsServlet extends HttpServlet {

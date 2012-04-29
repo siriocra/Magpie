@@ -18,6 +18,13 @@ import org.slf4j.LoggerFactory;
 import ru.ncedu.magpie.basicClasses.DBInterface;
 import ru.ncedu.magpie.basicClasses.VKUser;
 
+/**
+ * Message-Driven Bean for getting message to 
+ * call {@link APIMethods#getFriends(String, String)}
+ * @author IrisM
+ * 
+ * @see APIMethods
+ */
 @MessageDriven(activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationName", propertyValue = "FriendsQueue"),
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")

@@ -20,7 +20,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * Servlet, sending message to {@link ru.ncedu.magpie.ejbpackage.FriendsMDB} for getting user's friends' contacts
+ * @author IrisM
+ *
+ * @see ru.ncedu.magpie.ejbpackage.FriendsMDB
+ */
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = { "/refreshfriends" })
 public class RefreshFriendsServlet extends HttpServlet {

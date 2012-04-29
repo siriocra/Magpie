@@ -27,6 +27,11 @@ import ru.ncedu.magpie.ejbpackage.APIMethods;
 
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * Servlet for authorizing user and getting user info 
+ * @author IrisM
+ *
+ */
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = {"/auth"})
 public class Authorization extends HttpServlet{

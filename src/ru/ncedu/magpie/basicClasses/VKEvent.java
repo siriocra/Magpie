@@ -3,6 +3,10 @@ package ru.ncedu.magpie.basicClasses;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Class for storing events from VK
+ * @author IrisM
+ */
 public class VKEvent {
 	
 	private String gid;

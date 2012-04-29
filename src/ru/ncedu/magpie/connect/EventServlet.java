@@ -18,7 +18,11 @@ import org.slf4j.LoggerFactory;
 import ru.ncedu.magpie.basicClasses.VKEvent;
 import ru.ncedu.magpie.ejbpackage.APIMethods;
 
-
+/**
+ * Servlet for getting and viewing all user's events
+ * @author IrisM
+ *
+ */
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = { "/events" })
 public class EventServlet extends HttpServlet {
